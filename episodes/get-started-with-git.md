@@ -37,8 +37,8 @@ route to properly understanding git.
 
 ### Set up a simple project directory and git repository
 
-1. Open your shell/terminal, change into your home directory and create a project
-   directory...
+1. **Open your shell/terminal, change into your home directory and create a project
+   directory...**
    
    _If you're on Windows, ensure you open the Git Bash application which will
    open a bash shell (on of the standard Linux/Unix shells), rather than the
@@ -51,7 +51,7 @@ route to properly understanding git.
    $ cd git-intro         # Change into this directory
    ```
 
-2. Create a simple file in this directory to start working with...
+2. **Create a simple file in this directory to start working with...**
 
    For this simple example, we'll pretend we're working with a 3D printer which
    needs a configuration file. That configuration file is going to be in
@@ -91,8 +91,25 @@ notes: "Demonstration pseudo‑config file for training purposes; all values are
 
    If you're not familiar with `nano`, you can exit using Ctrl-x and you'll be asked if you want to save the file. You can also save first by using Ctrl-o. If you've not made any further changes after saving, Ctrl-x will then exit straight away.
 
+3. **Some quick one-time git setup**
 
-3. Initialise a git repository in your `git-intro` directory.
+   All git commits have a user name and email address associated with them. Before we do anything else, we'll set this in your local git configuration on your system. This setting is specific to the git installation on this computer so if you go to another computer and install git, you'll need to set the user name and email in the config there too... 
+
+   ```bash
+   $ git config --global user.email "<EMAIL ADDRESS TO USE FOR GIT COMMITS>"
+   $ git config --global user.name "<your first name and surname>"
+   ```
+
+   For repositories that end up on public, web-based repositories such as
+   GitHub, users often don't want their email address publicly available on all
+   commits that they make. GitHub provides the option to use a "no reply" email
+   address based on your GitHub username. See the [information they provide](https://docs.github.com/en/account-and-profile/reference/email-addresses-reference#your-noreply-email-address) in
+   the documentation on this for more details. Since we will be pushing this repository to
+   GitHub shortly, you could initially use a noreply email address of the format
+   GITHUB_USERNAME@users.noreply.github.com for the purpose of this example
+   exercise, or simply include your regular email address.
+
+4. **Initialise a git repository in your `git-intro` directory.**
 
    Here we're telling git that we want to be able to use it to manage files within this directory (and all directories below this one - i.e. all subdirectories.)
 
@@ -104,5 +121,138 @@ notes: "Demonstration pseudo‑config file for training purposes; all values are
    see a `.git` directory present. This is what git created when you ran `git
    init`. So, we now have a directory with a file in it, and we've initialised
    a git repository in that directory. How do we tell git to actually do
-   something useful?! 
+   something useful?!
 
+5. **The git workflow and checking the status of your repository**
+
+   In a minute, we're going to see the git workflow of _staging_ and _committing_
+   files in action. As highlighted in the introduction, this involves first adding
+   all the files we want to store changes to into the "staging" area. Once all the
+   changed files that we want to store in a given commit have been added to the
+   staging area, we can then go ahead and commit the files.
+
+   In order to pick up changes to files, git needs to _track_ files. It only
+   tracks the files that we tell it to. The first time we add a file to the
+   staging area that git has never seen before, it begins tracking the changes
+   to that file.
+
+   At the moment, our repository is blank. We've created a repository in our
+   `git-intro` directory, and there's a file in our directory called
+   `printer-config.yaml`, but we haven't told git to track it. How can we
+   confirm this? It's time to look at the second git command we're going to
+   learn! `git status` - you can now run the command in your terminal:
+
+   ```bash
+   $ git status
+   ```
+
+   ```output
+   On branch main
+
+   No commits yet
+
+   Untracked files:
+     (use "git add <file>..." to include in what will be committed)
+	   printer-config.yaml
+
+   nothing added to commit but untracked files present (use "git add" to track)
+   ```
+
+   There's a lot of information in this output! However, you can also see that
+   git's output often provides helpful hints. Some key things to note:
+
+    - `No commits yet`: That makes sense, we haven't committed anything yet!
+    - `Untracked files:` Here git is highlighting that within this git
+      repository, it can see a file that we haven't told it to track. _When
+      working with more complex collections of files in a directory that is a
+      set up as a git repository, it's quite common that there are some files
+      you won't want git to track._
+    - `On branch main`: This one's interesting - what is "branch main"?! Git
+      has a concept of "branches". Branches are really useful when you get into
+      more advanced git use but, for now, it's important to know that you can't
+      have a git repository without any branches. There will always be at least a
+      default branch. That branch can actually be called anything but, by
+      convention, it's now generally called `main`. In the past it was called
+      `master` so you may still see older repositories where the default branch
+      is called `master`.
+
+      Ok, we know that git can see our file that we created, and that it's not
+      yet tracking it. Let's get our file tracked/staged and committed...
+
+5. **Committing our file to git**
+
+   We're now going to use the common pair of git commands `git add` and `git
+   commit` to create a new commit that stores our file to the git repository.
+
+   `git add` is used to move files that we want to commit to the staging area,
+   this has to be done before you can commit a file. In the case of
+   new/untracked files, `git add` also serves to mark that you want git to
+   track the file. When you make a commit, you can add a comment with your
+   commit. It's really important that you add a short but descriptive comment
+   with every commit. If you come back later and look at a repository with
+   hundreds or thousands of commits and you want to find where you made a
+   specific change or update, endless messages saying "Added file", "Changed
+   file" are really unhelpful!
+
+   :::::::::::::::::::::::::::::::::
+
+   ## Adding comments to git commits
+
+   When you use the `git commit` command, you can provide your comment
+   directly on the command line using the `-m` switch. If you don't do this,
+   git will open up the default text editor configured on your system for you
+   to type in your comment. For the purpose of this simple example, we'll use
+   `-m` on the command line. You can tell git which editor on your system to
+   open if you want to use that approach. A great reference for this is the
+   [configuration information in the Carpentries git
+   lesson](https://swcarpentry.github.io/git-novice/02-setup.html#line-endings
+   ).
+
+   :::::::::::::::::::::::: callout
+
+   We can now stage/track and commit our file:
+
+   ```bash
+   $ git add printer-config.yaml
+   $ git commit -m "Adding initial printer config"   # no filename specified here, it adds all staged files.
+   ```
+
+   Let's use the status command we looked at before to see how things have
+   changed:
+   
+   ```bash
+   $ git status
+   ```
+
+   ```output
+   On branch main
+   nothing to commit, working tree clean
+   ```
+
+   Ok, the file was committed, git is tracking it and nothing has changed since
+   we made the commit (we only just did it!), so git tells us that there's now
+   nothing to commit and the working tree is clean (i.e. nothing has changed in
+  the tracked files).
+
+6. **Looking at commit information**
+
+   One last command for us to look at - `git log`. This shows us details (a log) of all
+   the commits in this repository:
+
+   ```bash
+   $ git log
+   ```
+
+   ```output
+   commit 69c331e25240e170a57a19577389901bcbf066a2 (HEAD -> main)
+   Author: Jeremy Cohen <jcohen02@users.noreply.github.com>
+   Date:   Fri Jan 16 00:55:35 2026 +0000
+
+       Adding initial printer config
+
+   ```
+
+7. **Let's add a little more to our repository**
+
+   Before we move on to look at GitHub, we're going to add a "README" file and
+   another sample data file to our repository.
