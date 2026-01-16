@@ -1,7 +1,7 @@
 ---
 title: "Part 2: Getting started with git"
-teaching: 10 # teaching time in minutes
-exercises: 10 # exercise time in minutes
+teaching: 15 # teaching time in minutes
+exercises: 15 # exercise time in minutes
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
@@ -194,7 +194,7 @@ notes: "Demonstration pseudo‑config file for training purposes; all values are
    specific change or update, endless messages saying "Added file", "Changed
    file" are really unhelpful!
 
-   :::::::::::::::::::::::::::::::::
+   ::::::::::::::::::::::::::::::::: callout
 
    ## Adding comments to git commits
 
@@ -208,7 +208,7 @@ notes: "Demonstration pseudo‑config file for training purposes; all values are
    lesson](https://swcarpentry.github.io/git-novice/02-setup.html#line-endings
    ).
 
-   :::::::::::::::::::::::: callout
+   :::::::::::::::::::::::::::::::::::::::::
 
    We can now stage/track and commit our file:
 
@@ -256,3 +256,147 @@ notes: "Demonstration pseudo‑config file for training purposes; all values are
 
    Before we move on to look at GitHub, we're going to add a "README" file and
    another sample data file to our repository.
+
+   This will help to show why the two-step process of staging can committing
+   files is helpful.
+
+   We're going to create a README file. This is a very common file to see in
+   the top level of a git repository. It generally provides some details about
+   the project the repository contains, or the files that are stored there.
+   We're going to use a format called Markdown for our README file. When we
+   subsequently send our repository content to GitHub, one of the things GitHub
+   does is looks for a README file in the top level of a repository and then
+   displays it nicely on the main repository page in the GitHub web interface.
+   Even if you're not using GitHub, a README file is important to provide
+   useful information to anyone using your project, or just to remind you
+   what's there when you come back after a while and look at the files!
+
+   Our README file will have a `.md` extension since it's in Markdown format.
+   Again, using `nano`, or an editor of your choice, create a file named
+   README.md and paste the contents below into it:
+
+   ```bash
+   $ nano README.md
+   ```
+
+   Here's the contents to put into the file:
+
+   ```
+   # Git and GitHub for Technicians Example Repository
+
+   This repository is a simple example created as part of the git and GitHub for technicians workshop session run as part of the Institute for Technical Skills and Strategy (ITSS) WinterFest event series.
+
+   ### What files are here?
+
+   The repo contains a mock top-level configuration file for a 3D printer setup and a directory  (`job_configs`) for storing a set of standard job configurations used within our invented fabrication lab!
+
+   ### Still to do
+
+   There are a few tasks that still need to be done here:
+
+   - [ ] Add a space for our lab SOPs and begin adding them
+   - [ ] Create space for configurations for other instruments and machines in the lab
+   - [ ] Restructure the files to put the 3D printing content in its own sub-directory alongside content for other lab machines.
+   - [ ] ...
+
+   ### Licence
+
+   The content in this repository is under an open licence (CC-Y-4.0) in the hope that other lab managers will find it useful and take advantage of the structure here to manage their own open lab profiles, configurations and protocols.
+   ```
+
+   :::::::::::::::::::::::::::: callout
+
+   ## Adding a licence to your repository
+
+    It's very important (especially if you're making your repository public
+    and hoping that it will be useful to others), that you include a licence
+    on your repository. The licence is generally stored in a file called
+    LICENSE. There are many open source licences available for code,
+    documentation and other text-based content. This helps to ensure that
+    people wanting to use your materials know what they're allowed to do with
+    them and who to acknowledge.
+
+    In view of the limited time available, we won't add a licence now but you
+    can simply create a file called LICENSE, paste the content of your chosen
+    licence into it and then add it to your repository, or you can follow
+    GitHub's [helpful licensing
+    documentation](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-license-to-a-repository?search-overlay-open=true),
+    once we've added our repository to GitHub.
+    If you create a repository within GitHub in the first place, GitHub's [licence
+    picker](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)
+    helps you to add a licence when the repository is initially set up.
+
+   :::::::::::::::::::::::::::::::::::::::
+
+
+   :::::::::::::::::::::::::: callout
+
+   ## Ignoring files you don't want to commit - .gitignore
+
+    Again, we don't have time to cover this fully in the session but it's
+    often the case that there are files you don't want to add to your git
+    repository. Maybe local configuration files created by your text editor
+    that are only relevant to your computer, or temporary files generated by
+    a tool you've run to create some content in your repository for example.
+
+    If you have those files floating around in your repoaitory directory,
+    every time you run `git status`, git will remind you that those files
+    exist and are untracked. It's also rather easy to accidentally commit
+    them later.
+
+    As a result, you can create a file called `.gitignore` (note the "." at the
+    start) and include a list of files or patterns (e.g. `*.tmp`) on
+    individual lines. Git will then ignore any files in your directory that
+    match that pattern and won't tell you about them again.
+
+    You can take a look at the [.gitignore
+    documentation](https://git-scm.com/docs/gitignore) for much more
+    information.
+
+   :::::::::::::::::::::::::::::::::::::::
+
+   To complete our simple test repository, we'll now create a directory and
+   put a placeholder file in there. We'll then look at how to commit the new
+   content.
+      
+    ```bash
+    $ mkdir job_configs
+    $ nano job_configs/placeholder_config.txt
+    ```
+
+    Add the following content into `placeholder_config.txt`:
+
+    ```
+    This is a placeholder file for the job_configs directory where job configurations for our most common 3D printing processes will be stored.
+    ```
+
+    Now let's stage and commit the new files. Let's first look at the output
+    of `git status`:
+
+    ```output
+    On branch main
+    Untracked files:
+    (use "git add <file>..." to include in what will be committed)
+    README.md
+    job_configs/
+    
+    nothing added to commit but untracked files present (use "git add" to track)
+    ```
+
+    **NOTE: Some bits to finish off here**
+
+    What do you note here? We can see that there are untracked files but it
+    looks a little different to what we saw in the previous example.
+
+    Here we're going to commit two files (and a directory that one of the files
+    is in). This shows the value of staging. We move all the files we want to
+    commit into the staging area and then we can run `git commit` once, with a
+    descriptive message, to commit everything that is in the staging area.
+
+    Note that you don't have to commit all changed files in a single commit.
+    You may sometimes want to stage a few files that represent once specific
+    logical change to your repository, for example you've added a functional
+    change to your configuration. You stage just those files and commit them.
+    `git status` will then show that any other files you didn't commit remain
+    in the repository with their changes but these changes haven't yet been
+    stored to the git repository.

@@ -69,6 +69,8 @@ contact: 'jeremy@rslondon.ac.uk'
 episodes: 
 - introduction-to-git.md
 - get-started-with-git.md
+- get-started-with-github.md
+- git-and-github-where-next.md
 
 # Information for Learners
 learners: 
