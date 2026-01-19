@@ -186,6 +186,10 @@ We can now go back to our repository page in GitHub and explore the content
 there. As you'll see, it provides a much more user-friendly interface for
 browsing your repository content.
 
+![GitHub respository page in the web interface showing README and
+files.](fig/GitHubRepoPage1.png){alt='Screenshot of the GitHub respository page in the
+web interface showing README and files.'} 
+
 You can look at the commits and also see what has been changed in each one.
 
 [SCREENSHOTS TO FOLLOW]
