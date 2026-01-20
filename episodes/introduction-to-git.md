@@ -26,3 +26,8 @@ exercises: 0 # exercise time in minutes
 
 This introductory part of the session is being delivered as a short
 "lecture-style" PowerPoint presentation.
+
+If you would like to see some further introductory content, there are some
+useful introductory videos that you can watch in the git documentation:
+
+ - [Git introductory videos for beginners](https://git-scm.com/videos)

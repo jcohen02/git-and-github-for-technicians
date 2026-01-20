@@ -190,6 +190,16 @@ browsing your repository content.
 files.](fig/GitHubRepoPage1.png){alt='Screenshot of the GitHub respository page in the
 web interface showing README and files.'} 
 
-You can look at the commits and also see what has been changed in each one.
+You can look at the commits and also see what has been changed in each one:
 
-[SCREENSHOTS TO FOLLOW]
+![Repository commits shown in the GitHub web
+interface.](fig/GitHubCommitsScreenshot.png){alt='Screenshot of the GitHub
+commits page showing our repository\'s list of two commits.'}
+
+<br/><br/>
+
+![GitHub web interface showing the changes associated with a
+commit.](fig/GitHubCommitViewScreenshot.png){alt='Screenshot of the GitHub web
+interface showing the changes associated with a
+commit'}
+
