@@ -309,7 +309,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Part 2: Getting started with git</h1>
-        <p>Last updated on 2026-01-16 |
+        <p>Last updated on 2026-01-20 |
 
         <a href="https://github.com/jcohen02/git-and-github-for-technicians/edit/main/episodes/get-started-with-git.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -365,7 +365,37 @@ low-level command line interface offers the best route to properly
 understanding git.</p>
 </div>
 <div class="section level3">
+<h3 id="scenario---technical-lab-manager">Scenario - Technical lab manager<a class="anchor" aria-label="anchor" href="#scenario---technical-lab-manager"></a></h3>
+<p>Imagine that you’re managing a fabrication lab. You have a number of
+differnet machines in the lab - several 3D printers of different models
+with different capabilities, laser cutters, and a couple of CNC milling
+machines.</p>
+<p>Each of these machines has a computer controlling it and a number of
+different configuration files, templates, patterns and job files. These
+files change over time as new templates are added, configuration files
+are modified and different job tasks are required.</p>
+<p>Git is a great way to manage these files and ensure that you retain a
+history of what changed when and the exact changes that were made. If
+this repository of files is shared between multiple lab staff, git will
+store details of who made the changes and when.</p>
+<p>Once you’ve set up your repository, if you subsequently decide to
+host it on GitHub, colleagues (if you make the repository private and
+share it with individual colleagues), or anyone in the world (if you
+make the repository public), can see the files and potentially learn
+from your configurations and lab setup.</p>
+<p>Let’s see how you might go about setting something like this up.</p>
+</div>
+<div class="section level3">
 <h3 id="set-up-a-simple-project-directory-and-git-repository">Set up a simple project directory and git repository<a class="anchor" aria-label="anchor" href="#set-up-a-simple-project-directory-and-git-repository"></a></h3>
+<p><small><em>Note: We’ll be creating a few simple files in the
+following sections. If you’d like to, you can download a small zip file
+containing the “ready-made” directory structure with the files we’ll
+create below. This will enable you to to skip some of the steps below
+and make things a little faster. If you’d like to use this file, you can
+download it here: <a href="../files/git-technicians-files.zip">git-technicians-files.zip</a>.</em>
+(<em>Save the file in your home directory and then extract it using the
+<code>unzip</code> command on macOS or Linux, or File Explorer in
+Windows.</em>)</small></p>
 <ol style="list-style-type: decimal"><li>
 <p><strong>Open your shell/terminal, change into your home directory
 and create a project directory…</strong></p>
@@ -566,7 +596,9 @@ information in the Carpentries git lesson</a>.</p>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">$</span> git add printer-config.yaml</span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Adding initial printer config"</span>   <span class="co"># no filename specified here, it adds all staged files.</span></span></code></pre>
 </div>
-<p>Let’s use the status command we looked at before to see how things
+<figure><img src="../fig/GitStagingExample.png" alt="Diagram showing an example of the git staging and commit process." class="figure mx-auto d-block"><div class="figcaption">Illustration of the git staging and commit
+process.</div>
+</figure><p>Let’s use the status command we looked at before to see how things
 have changed:</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -643,10 +675,10 @@ The repo contains a mock top-level configuration file for a 3D printer setup and
 
 There are a few tasks that still need to be done here:
 
-- [ ] Add a space for our lab SOPs and begin adding them
-- [ ] Create space for configurations for other instruments and machines in the lab
-- [ ] Restructure the files to put the 3D printing content in its own sub-directory alongside content for other lab machines.
-- [ ] ...
+- Add a space for our lab SOPs and begin adding them
+- Create space for configurations for other instruments and machines in the lab
+- Restructure the files to put the 3D printing content in its own sub-directory alongside content for other lab machines.
+- ...
 
 ### Licence
 
@@ -731,21 +763,78 @@ job_configs/
 
 nothing added to commit but untracked files present (use "git add" to track)</code></pre>
 </div>
-<p><strong>NOTE: Some bits to finish off here</strong></p>
 <p>What do you note here? We can see that there are untracked files but
 it looks a little different to what we saw in the previous example.</p>
 <p>Here we’re going to commit two files (and a directory that one of the
 files is in). This shows the value of staging. We move all the files we
 want to commit into the staging area and then we can run
 <code>git commit</code> once, with a descriptive message, to commit
-everything that is in the staging area.</p>
+everything that is in the staging area:</p>
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="ex">$</span> git add README.md</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="ex">$</span> git add job_configs</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co"># (What do you note about the above command? Run `git status` to see what's happened.)</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Adding a README and initial job_configs"</span></span></code></pre>
+</div>
 <p>Note that you don’t have to commit all changed files in a single
 commit. You may sometimes want to stage a few files that represent once
 specific logical change to your repository, for example you’ve added a
 functional change to your configuration. You stage just those files and
 commit them. <code>git status</code> will then show that any other files
 you didn’t commit remain in the repository with their changes but these
-changes haven’t yet been stored to the git repository. <!--
+changes haven’t yet been stored to the git repository.</p>
+<p>Let’s check the output of <code>git status</code> and see where we
+are now with the status of our repository…</p>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="ex">$</span> git status</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>On branch main
+nothing to commit, working tree clean</code></pre>
+</div>
+<p>And now, let’s look at the commit log:</p>
+<div class="codewrapper sourceCode" id="cb21">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="ex">$</span> git log</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>commit d08f53b9d03edb7199bfcd0019fdcd76cbd2eba8 (HEAD -&gt; main)
+Author: Jeremy Cohen &lt;jcohen02@users.noreply.github.com&gt;
+Date:   Mon Jan 19 23:34:06 2026 +0000
+
+    Adding a README and initial job_configs
+
+commit 69c331e25240e170a57a19577389901bcbf066a2 (HEAD -&gt; main)
+Author: Jeremy Cohen &lt;jcohen02@users.noreply.github.com&gt;
+Date:   Fri Jan 16 00:55:35 2026 +0000
+
+    Adding initial printer config</code></pre>
+</div>
+<figure><img src="../fig/GitCommitExample.png" alt="Diagram showing an illustration of the commit status after two commits." class="figure mx-auto d-block"><div class="figcaption">An illustration of the commit status after two
+commits.</div>
+</figure><p>We’ve now got a basic git repository with a couple of commits.</p>
+<p>It’s on our local computer, which is fine, but if we want to work as
+part of a team with other people who would also like access to this
+information, what can we do? Well, we could simply copy the folder
+(including the <code>.git</code> folder inside it, which contains all
+the git “magic”), onto a USB stick and share it with other people.
+However, if they make changes to files on their computer (and commit
+them) and we make changes, our two repositories diverge down different
+routes. This will get complicated and confusing quickly! There are far
+better options. One service that can help us is GitHub!</p>
+<p>We’re now going to look at how to “<em>push</em>” our local
+repository to a remote repository on GitHub. <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  --></p>
@@ -789,7 +878,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.18.1" class="external-link">sandpaper (0.18.1)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/jcohen02/carpentries-varnish/tree/e83b34b9c3fd8326c3a84d8a3ecddd07ffead939" class="external-link">varnish (1.0.9)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.18.3" class="external-link">sandpaper (0.18.3)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/jcohen02/carpentries-varnish/tree/e83b34b9c3fd8326c3a84d8a3ecddd07ffead939" class="external-link">varnish (1.0.9)</a></p>
 		</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -811,8 +900,8 @@ any links that you are not going to use.
   "url": "https://jcohen02.github.io/git-and-github-for-technicians/instructor/get-started-with-git.html",
   "identifier": "https://jcohen02.github.io/git-and-github-for-technicians/instructor/get-started-with-git.html",
   "dateCreated": "2026-01-15",
-  "dateModified": "2026-01-16",
-  "datePublished": "2026-01-19"
+  "dateModified": "2026-01-20",
+  "datePublished": "2026-01-20"
 }
 
   </script><script>
