@@ -35,7 +35,40 @@ of the git workflow and the tasks being carried out. We feel that learning the
 basics of git through its low-level command line interface offers the best
 route to properly understanding git.
 
+### Scenario - Technical lab manager
+
+Imagine that you're managing a fabrication lab. You have a number of
+differnet machines in the lab - several 3D printers of different models with
+different capabilities, laser cutters, and a couple of CNC milling machines.
+
+Each of these machines has a computer controlling it and a number of different
+configuration files, templates, patterns and job files. These files change over
+time as new templates are added, configuration files are modified and different
+job tasks are required.
+
+Git is a great way to manage these files and ensure that you retain a history
+of what changed when and the exact changes that were made. If this repository
+of files is shared between multiple lab staff, git will store details of who
+made the changes and when.
+
+Once you've set up your repository, if you subsequently decide to host it on
+GitHub, colleagues (if you make the repository private and share it with
+individual colleagues), or anyone in the world (if you make the repository
+public), can see the files and potentially learn from your configurations and
+lab setup.
+
+Let's see how you might go about setting something like this up.
+
 ### Set up a simple project directory and git repository
+
+<small>_Note: We'll be creating a few simple files in the following sections. If you'd
+like to, you can download a small zip file containing the "ready-made"
+directory structure with the files we'll create below. This will enable you to
+to skip some of the steps below and make things a little faster. If you'd like
+to use this file, you can download it here:
+[git-technicians-files.zip](files/git-technicians-files.zip)._ (_Save the file
+in your home directory and then extract it using the `unzip` command on macOS or
+Linux, or File Explorer in Windows._)</small>
 
 1. **Open your shell/terminal, change into your home directory and create a project
    directory...**
@@ -217,6 +250,10 @@ notes: "Demonstration pseudo‑config file for training purposes; all values are
    $ git commit -m "Adding initial printer config"   # no filename specified here, it adds all staged files.
    ```
 
+   ![Illustration of the git staging and commit
+   process.](fig/GitStagingExample.png){alt='Diagram showing an example of the
+   git staging and commit process.'}
+
    Let's use the status command we looked at before to see how things have
    changed:
    
@@ -294,10 +331,10 @@ notes: "Demonstration pseudo‑config file for training purposes; all values are
 
    There are a few tasks that still need to be done here:
 
-   - [ ] Add a space for our lab SOPs and begin adding them
-   - [ ] Create space for configurations for other instruments and machines in the lab
-   - [ ] Restructure the files to put the 3D printing content in its own sub-directory alongside content for other lab machines.
-   - [ ] ...
+   - Add a space for our lab SOPs and begin adding them
+   - Create space for configurations for other instruments and machines in the lab
+   - Restructure the files to put the 3D printing content in its own sub-directory alongside content for other lab machines.
+   - ...
 
    ### Licence
 
@@ -383,15 +420,22 @@ notes: "Demonstration pseudo‑config file for training purposes; all values are
     nothing added to commit but untracked files present (use "git add" to track)
     ```
 
-    **NOTE: Some bits to finish off here**
-
     What do you note here? We can see that there are untracked files but it
     looks a little different to what we saw in the previous example.
 
     Here we're going to commit two files (and a directory that one of the files
     is in). This shows the value of staging. We move all the files we want to
     commit into the staging area and then we can run `git commit` once, with a
-    descriptive message, to commit everything that is in the staging area.
+    descriptive message, to commit everything that is in the staging area:
+
+    ```bash
+    $ git add README.md
+    $ git add job_configs
+
+    # (What do you note about the above command? Run `git status` to see what's happened.)
+
+    $ git commit -m "Adding a README and initial job_configs"
+    ```
 
     Note that you don't have to commit all changed files in a single commit.
     You may sometimes want to stage a few files that represent once specific
@@ -400,3 +444,54 @@ notes: "Demonstration pseudo‑config file for training purposes; all values are
     `git status` will then show that any other files you didn't commit remain
     in the repository with their changes but these changes haven't yet been
     stored to the git repository.
+
+    Let's check the output of `git status` and see where we are now with the
+    status of our repository...
+
+    ```bash
+    $ git status
+    ```
+
+    ```output
+    On branch main
+    nothing to commit, working tree clean
+    ```
+
+    And now, let's look at the commit log:
+
+    ```bash
+    $ git log
+    ```
+
+    ```output
+    commit d08f53b9d03edb7199bfcd0019fdcd76cbd2eba8 (HEAD -> main)
+    Author: Jeremy Cohen <jcohen02@users.noreply.github.com>
+    Date:   Mon Jan 19 23:34:06 2026 +0000
+    
+        Adding a README and initial job_configs
+
+   commit 69c331e25240e170a57a19577389901bcbf066a2 (HEAD -> main)
+   Author: Jeremy Cohen <jcohen02@users.noreply.github.com>
+   Date:   Fri Jan 16 00:55:35 2026 +0000
+
+        Adding initial printer config
+    ```
+
+    ![An illustration of the commit status after two
+    commits.](fig/GitCommitExample.png){alt='Diagram showing an illustration of the
+    commit status after two commits.'}
+
+    We've now got a basic git repository with a couple of commits.
+
+    It's on our local computer, which is fine, but if we want to work as part
+    of a team with other people who would also like access to this information,
+    what can we do? Well, we could simply copy the folder (including the `.git`
+    folder inside it, which contains all the git "magic"), onto a USB stick and
+    share it with other people. However, if they make changes to files on their
+    computer (and commit them) and we make changes, our two repositories
+    diverge down different routes. This will get complicated and confusing
+    quickly! There are far better options. One service that can help us is
+    GitHub!
+
+    We're now going to look at how to "_push_" our local repository to a remote
+    repository on GitHub.
